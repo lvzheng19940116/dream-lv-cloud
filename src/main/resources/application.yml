@@ -1,0 +1,58 @@
+
+server:
+  port: 7777
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/fly?characterEncoding=utf-8&useSSL=false
+
+  application:
+    name: lv-service
+  zipkin:
+    base-url: http://localhost:5555/
+  sleuth:
+    sampler:
+      percentage: 1 #zipkin采样率，默认为0.1，改为1后全采样，但是会降低接口调用效率
+
+  rabbitmq:
+   password: guest
+   port: 5672
+   host: 127.0.0.1
+   username: guest
+
+
+management:
+  security:
+    enabled: false
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka/
+
+#hystrix:
+#  threadpool:
+#    default:
+#      coreSize: 500  #并发执行的最大线程数，默认10
+#  command:
+#    paas-file:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 3600000
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 8000  #命令执行超时时间，默认1000ms  断路器的超时时间大于ribbon超时时间，不然不会触发重试
+#
+#ribbon:
+#  ReadTimeout: 60000    #请求链接的超时时间
+#  ConnectTimeout: 60000  #请求处理的超时时间
+#  MaxAutoRetries: 1    #  对当前实例的重试次数
+#  MaxAutoRetriesNextServer: 2   #切换实例的重试次数
+#  OkToRetryOnAllOperations: true   #对所有操作请求都进行重试
